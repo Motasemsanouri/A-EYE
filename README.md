@@ -1,13 +1,13 @@
 # A-EYE
-# 👁️ Eye.AI – Smart Eye Disease Detection with Deep Learning
+# 👁️A-EYE – Smart Eye Disease Detection with Deep Learning
 
-**Eye.AI** is an AI-powered web application that detects and classifies common eye diseases from **Fundus** and **OCT** images. Designed for early screening and medical support, Eye.AI combines deep learning models with an interactive frontend to deliver fast, accurate predictions — complete with basic medical advice.
+**A-EYE** is an AI-powered web application that detects and classifies common eye diseases from **Fundus** and **OCT** images. Designed for early screening and medical support, A-EYE combines deep learning models with an interactive frontend to deliver fast, accurate predictions — complete with basic medical advice.
 
 ---
 
 ## 🚀 Demo
 
-Upload a Fundus or OCT image, and Eye.AI will:
+Upload a Fundus or OCT image, and A-EYE will:
 - Auto-detect the image type
 - Run the appropriate deep learning model
 - Return the predicted disease
@@ -47,4 +47,27 @@ Upload a Fundus or OCT image, and Eye.AI will:
 ---
 
 ## 📁 Project Structure
+A-EYE/
+├── models/
+│ ├── eye_diseases_model.tflite
+│ └── oct_modelT.tflite
+├── app.py
+├── templates/
+│ └── index.html
+├── static/
+│ ├── style.css
+│ └── script.js
+├── uploads/
+├── requirements.txt
+└── README.md
+
+
+---
+
+## 💻 How to Run Locally
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/EyeAI.git
+cd EyeAI
 
