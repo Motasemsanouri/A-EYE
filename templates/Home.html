@@ -1,0 +1,523 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A-EYE System</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> A-EYE SYSTEM </title>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> A-EYE SYSTEM </title>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> A-EYE SYSTEM </title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👁️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes blink {
+            0%, 45%, 55%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(0.1); }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(-45deg, #13073d, #1f157a, #394da3, #6388a1);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .particle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .rotating-circle {
+            position: absolute;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: rotate 30s linear infinite;
+        }
+        
+        .blinking-eye {
+            animation: blink 4s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        .prediction-results {
+            margin-top: 1rem;
+            padding: 1.25rem;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 0.75rem;
+            color: #0f2358;
+            font-size: 0.95rem;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .prediction-item {
+            margin-bottom: 0.75rem;
+        }
+
+        .probability-bar {
+            height: 8px;
+            background-color: rgba(18, 37, 90, 0.1);
+            border-radius: 4px;
+            margin-top: 0.25rem;
+            overflow: hidden;
+        }
+
+        .probability-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .condition-highlight {
+            font-weight: 600;
+            color: #0f235a;
+            padding: 0.25rem 0.5rem;
+            background-color: rgba(59, 130, 246, 0.1);
+            border-radius: 0.25rem;
+        }
+
+        .advice-box {
+            background-color: rgba(147, 197, 253, 0.2);
+            border-left: 4px solid #29497c;
+            padding: 0.75rem;
+            border-radius: 0.25rem;
+        }
+
+        .surgery-box {
+            background-color: rgba(253, 230, 138, 0.3);
+            border-left: 4px solid #d97706;
+            padding: 0.75rem;
+            border-radius: 0.25rem;
+        }
+        
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            transform: translateY(-2px);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen overflow-x-hidden relative">
+    <!-- Floating particles and decorative elements -->
+    <div id="particles-container"></div>
+    <div class="rotating-circle w-64 h-64 top-1/4 -left-32"></div>
+    <div class="rotating-circle w-96 h-96 bottom-1/4 -right-48"></div>
+    
+    <!-- Navigation -->
+    <nav class="container mx-auto px-4 py-6 relative z-20">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fas fa-eye text-white text-2xl mr-2 blinking-eye"></i>
+                <span class="text-white font-bold text-xl">A-EYE</span>
+            </div>
+            <div class="flex space-x-6">
+                <a href="/" class="text-white nav-link font-medium">Home</a>
+                <a href="/unknown" class="text-white nav-link font-medium">Auto-Detect</a>
+                <a href="https://github.com/MousaYousefAlwahedy" target="_blank" class="text-white nav-link">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main content -->
+    <div class="container mx-auto px-4 py-12 relative z-10">
+        <!-- Header -->
+        <header class="text-center mb-16">
+            <div class="inline-block mb-6 relative">
+                <div class="absolute -inset-4 rounded-full bg-white opacity-20"></div>
+                <i class="fas fa-eye text-white text-6xl relative blinking-eye"></i>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">A-EYE SYSTEM</h1>
+            <p class="text-xl text-white opacity-90 max-w-2xl mx-auto">
+                Advanced AI-powered classification with medical recommendations
+            </p>
+        </header>
+        
+        <!-- Classifier Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <!-- Auto-Detection Card -->
+            <div class="glass-effect rounded-2xl p-8 text-white transform transition-all hover:scale-[1.02]">
+                <div class="flex items-center mb-6">
+                    <div class="bg-green-100 p-3 rounded-full mr-4">
+                        <i class="fas fa-question-circle text-green-600 text-2xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold">Auto-Detection</h2>
+                </div>
+                <p class="mb-6 opacity-90">
+                    Not sure what type of image you have? Let our system automatically detect and classify it.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Fundus</span>
+                    <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">OCT</span>
+                    <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Smart Analysis</span>
+                </div>
+                <a href="/unknown" class="w-full block bg-white text-green-600 font-bold py-3 px-4 rounded-lg hover:bg-green-50 transition text-center">
+                    <i class="fas fa-magic mr-2"></i> Auto-Detect Image
+                </a>
+            </div>
+            
+            <!-- Fundus Classifier -->
+            <div class="glass-effect rounded-2xl p-8 text-white transform transition-all hover:scale-[1.02]">
+                <div class="flex items-center mb-6">
+                    <div class="bg-blue-100 p-3 rounded-full mr-4">
+                        <i class="fas fa-camera-retro text-blue-600 text-2xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold">Fundus Classifier</h2>
+                </div>
+                <p class="mb-6 opacity-90">
+                    Analyze retinal fundus images for conditions including cataract, diabetic retinopathy, and glaucoma.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Cataract</span>
+                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Diabetic Retinopathy</span>
+                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Glaucoma</span>
+                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Other</span>
+                </div>
+                <button id="upload-fundus-btn" class="w-full bg-white text-blue-600 font-bold py-3 px-4 rounded-lg hover:bg-blue-50 transition">
+                    <i class="fas fa-upload mr-2"></i> Upload Fundus Image
+                </button>
+                <input type="file" id="fundus-input" accept="image/*" hidden>
+                <div id="fundus-results" class="mt-4"></div>
+            </div>
+            
+            <!-- OCT Classifier -->
+            <div class="glass-effect rounded-2xl p-8 text-white transform transition-all hover:scale-[1.02]">
+                <div class="flex items-center mb-6">
+                    <div class="bg-purple-100 p-3 rounded-full mr-4">
+                        <i class="fas fa-layer-group text-purple-600 text-2xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold">OCT Classifier</h2>
+                </div>
+                <p class="mb-6 opacity-90">
+                    Process Optical Coherence Tomography scans for CNV, DME, Drusen, and other retinal conditions.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded-full">CNV</span>
+                    <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded-full">DME</span>
+                    <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Drusen</span>
+                    <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Other</span>
+                </div>
+                <button id="upload-oct-btn" class="w-full bg-white text-purple-600 font-bold py-3 px-4 rounded-lg hover:bg-purple-50 transition">
+                    <i class="fas fa-upload mr-2"></i> Upload OCT Scan
+                </button>
+                <input type="file" id="oct-input" accept="image/*" hidden>
+                <div id="oct-results" class="mt-4"></div>
+            </div>
+        </div>
+        
+        <!-- Features Section -->
+        <div class="mt-24 max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-white text-center mb-12">Advanced Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-effect p-6 rounded-xl text-white transition hover:scale-[1.03]">
+                    <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <i class="fas fa-brain text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-center">AI Diagnosis</h3>
+                    <p class="opacity-90 text-center">State-of-the-art deep learning models trained on thousands of medical images.</p>
+                </div>
+                <div class="glass-effect p-6 rounded-xl text-white transition hover:scale-[1.03]">
+                    <div class="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <i class="fas fa-heartbeat text-purple-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-center">Medical Advice</h3>
+                    <p class="opacity-90 text-center">Personalized recommendations from our ophthalmology knowledge base.</p>
+                </div>
+                <div class="glass-effect p-6 rounded-xl text-white transition hover:scale-[1.03]">
+                    <div class="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <i class="fas fa-calendar-check text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-center">Surgical Planning</h3>
+                    <p class="opacity-90 text-center">Automatic surgical recommendations with virtual consultation dates.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="mt-24 py-8 text-center text-white opacity-80 relative z-10">
+        <div class="glass-effect inline-block px-6 py-3 rounded-full mb-4">
+            <p>© 2025 Eye Model Classifier | Medical AI Diagnostics</p>
+        </div>
+        <div class="flex justify-center space-x-4 mt-4">
+            <a href="https://github.com/MousaYousefAlwahedy" target="_blank" class="hover:text-blue-200 transition">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://x.com/motasemsanouri4" class="hover:text-blue-200 transition text-xl font-bold">X</a>
+            <a href="https://www.linkedin.com/in/motasem-sanouri" target="_blank" class="hover:text-blue-200 transition">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="mailto:Mousayousefalwahedy@gmail.com" class="hover:text-blue-200 transition">
+                <i class="fas fa-envelope"></i>
+            </a>
+            <a href="https://www.kaggle.com/mousayousefalwahedy" target="_blank" class="hover:opacity-70 transition">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Kaggle_logo.png" alt="Kaggle logo" class="h-6">
+            </a>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create floating particles
+            const container = document.getElementById('particles-container');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                const size = Math.random() * 4 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+                particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+                particle.style.opacity = Math.random() * 0.5 + 0.3;
+                container.appendChild(particle);
+            }
+            
+            // === Fundus Upload Logic ===
+            const fundusBtn = document.getElementById('upload-fundus-btn');
+            const fundusInput = document.getElementById('fundus-input');
+            const fundusResults = document.getElementById('fundus-results');
+            const fundusCard = fundusBtn.closest('.glass-effect');
+
+            fundusBtn.addEventListener('click', () => fundusInput.click());
+
+            fundusInput.addEventListener('change', async function() {
+                const file = this.files[0];
+                if (!file) return;
+
+                // Show loading state
+                fundusBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+                fundusBtn.disabled = true;
+                fundusCard.classList.add('bg-blue-50', 'bg-opacity-30');
+
+                const formData = new FormData();
+                formData.append('image', file);
+
+                try {
+                    const res = await fetch('/predict_fundus', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (!res.ok) throw new Error(await res.text());
+                    
+                    const data = await res.json();
+                    
+                    // Format the results
+                    let resultsHTML = `
+                        <div class="prediction-results">
+                            <div class="prediction-item">
+                                <p><span class="font-semibold">Condition:</span> <span class="condition-highlight">${data.class}</span></p>
+                                <p><span class="font-semibold">Confidence:</span> ${(data.confidence * 100).toFixed(2)}%</p>
+                            </div>
+                            <div class="prediction-item mt-4">
+                                <p class="font-semibold mb-2">Medical Advice:</p>
+                                <div class="advice-box">
+                                    <p>${data.advice}</p>
+                                </div>
+                            </div>`;
+
+                    // Add surgical info if needed
+                    if (data.surgical_recommendation.needs_surgery) {
+                        resultsHTML += `
+                            <div class="prediction-item mt-4">
+                                <p class="font-semibold mb-2">Surgical Recommendation:</p>
+                                <div class="surgery-box">
+                                    <p>We recommend scheduling a surgical consultation on:</p>
+                                    <p class="font-bold mt-1">${data.surgical_recommendation.date} at ${data.surgical_recommendation.time}</p>
+                                    <p class="text-sm mt-2"><i class="fas fa-info-circle mr-1"></i> ${data.surgical_recommendation.pre_op_instructions}</p>
+                                </div>
+                            </div>`;
+                    }
+
+                    // Add probability bars
+                    resultsHTML += `
+                        <div class="prediction-item mt-4">
+                            <p class="font-semibold mb-2">All probabilities:</p>`;
+
+                    Object.entries(data.all_predictions).forEach(([name, prob]) => {
+                        const percentage = (prob * 100).toFixed(1);
+                        const color = name === data.class ? 'bg-blue-600' : 'bg-gray-400';
+                        resultsHTML += `
+                            <div class="mb-2">
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>${name}</span>
+                                    <span>${percentage}%</span>
+                                </div>
+                                <div class="probability-bar">
+                                    <div class="probability-fill ${color}" style="width: ${percentage}%"></div>
+                                </div>
+                            </div>`;
+                    });
+
+                    resultsHTML += `</div></div>`;
+                    
+                    // Display results
+                    fundusResults.innerHTML = resultsHTML;
+                    
+                } catch (err) {
+                    console.error('Prediction error:', err);
+                    fundusResults.innerHTML = `
+                        <div class="prediction-results bg-red-50 text-red-800">
+                            <i class="fas fa-exclamation-circle mr-2"></i>
+                            Error processing image: ${err.message || 'Unknown error'}
+                        </div>`;
+                } finally {
+                    // Reset button state
+                    fundusBtn.innerHTML = '<i class="fas fa-upload mr-2"></i> Upload Fundus Image';
+                    fundusBtn.disabled = false;
+                    fundusCard.classList.remove('bg-blue-50', 'bg-opacity-30');
+                }
+            });
+
+            // === OCT Upload Logic ===
+            const octBtn = document.getElementById('upload-oct-btn');
+            const octInput = document.getElementById('oct-input');
+            const octResults = document.getElementById('oct-results');
+            const octCard = octBtn.closest('.glass-effect');
+
+            octBtn.addEventListener('click', () => octInput.click());
+
+            octInput.addEventListener('change', async function() {
+                const file = this.files[0];
+                if (!file) return;
+
+                // Show loading state
+                octBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+                octBtn.disabled = true;
+                octCard.classList.add('bg-purple-50', 'bg-opacity-30');
+
+                const formData = new FormData();
+                formData.append('image', file);
+
+                try {
+                    const res = await fetch('/predict_oct', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (!res.ok) throw new Error(await res.text());
+                    
+                    const data = await res.json();
+                    
+                    // Format the results
+                    let resultsHTML = `
+                        <div class="prediction-results">
+                            <div class="prediction-item">
+                                <p><span class="font-semibold">Condition:</span> <span class="condition-highlight">${data.class}</span></p>
+                                <p><span class="font-semibold">Confidence:</span> ${(data.confidence * 100).toFixed(2)}%</p>
+                            </div>
+                            <div class="prediction-item mt-4">
+                                <p class="font-semibold mb-2">Medical Advice:</p>
+                                <div class="advice-box">
+                                    <p>${data.advice}</p>
+                                </div>
+                            </div>`;
+
+                    // Add surgical info if needed
+                    if (data.surgical_recommendation.needs_surgery) {
+                        resultsHTML += `
+                            <div class="prediction-item mt-4">
+                                <p class="font-semibold mb-2">Surgical Recommendation:</p>
+                                <div class="surgery-box">
+                                    <p>We recommend scheduling a surgical consultation on:</p>
+                                    <p class="font-bold mt-1">${data.surgical_recommendation.date} at ${data.surgical_recommendation.time}</p>
+                                    <p class="text-sm mt-2"><i class="fas fa-info-circle mr-1"></i> ${data.surgical_recommendation.pre_op_instructions}</p>
+                                </div>
+                            </div>`;
+                    }
+
+                    // Add probability bars
+                    resultsHTML += `
+                        <div class="prediction-item mt-4">
+                            <p class="font-semibold mb-2">All probabilities:</p>`;
+
+                    Object.entries(data.all_predictions).forEach(([name, prob]) => {
+                        const percentage = (prob * 100).toFixed(1);
+                        const color = name === data.class ? 'bg-purple-600' : 'bg-gray-400';
+                        resultsHTML += `
+                            <div class="mb-2">
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>${name}</span>
+                                    <span>${percentage}%</span>
+                                </div>
+                                <div class="probability-bar">
+                                    <div class="probability-fill ${color}" style="width: ${percentage}%"></div>
+                                </div>
+                            </div>`;
+                    });
+
+                    resultsHTML += `</div></div>`;
+                    
+                    // Display results
+                    octResults.innerHTML = resultsHTML;
+                    
+                } catch (err) {
+                    console.error('Prediction error:', err);
+                    octResults.innerHTML = `
+                        <div class="prediction-results bg-red-50 text-red-800">
+                            <i class="fas fa-exclamation-circle mr-2"></i>
+                            Error processing image: ${err.message || 'Unknown error'}
+                        </div>`;
+                } finally {
+                    // Reset button state
+                    octBtn.innerHTML = '<i class="fas fa-upload mr-2"></i> Upload OCT Scan';
+                    octBtn.disabled = false;
+                    octCard.classList.remove('bg-purple-50', 'bg-opacity-30');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
