@@ -32,7 +32,7 @@ Upload a Fundus or OCT image, and A-EYE will:
 
 | Input | Model | Output |
 |------|--------|--------|
-| ![Fundus Sample](images/sample_fundus.jpg) | Fundus Model | Cataract |
+| ![Fundus Sample](cataract1228.jpg) | Fundus Model | Cataract |
 | ![OCT Sample](images/sample_oct.jpg) | OCT Model | CNV |
 
 ---
